@@ -44,7 +44,9 @@ class EntitiesManager {
     }
 
     getPlayers() {
-        return this.getEntitiesWithName("Player");
+        let players = this.getEntitiesWithName("Player");
+        if(!players.length) return [players];
+        else return players;
     }
 
     getSaber() {

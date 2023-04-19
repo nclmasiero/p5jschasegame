@@ -1,12 +1,12 @@
 class Enemy extends Entity {
-    constructor(x, y, saber, players) {
+    constructor(x, y) {
         super("Enemy");
         this.position = createVector(x, y);
         this.diameter = 15;
 
-        this.saber = saber;
+        this.saber = entitiesManager.getSaber();
 
-        this.players = players;
+        this.players = entitiesManager.getPlayers();
         this.target = this.getNearestPlayer();
 
         this.refreshTime = 120;
@@ -45,6 +45,7 @@ class Enemy extends Entity {
     }
 
     updatePlayers() {
+        if(this.players == null) return;
         for(let player of this.players) {
             let distance = dist(this.position.x, this.position.y, player.position.x, player.position.y);
             let diameterSum = player.diameter + this.diameter;
@@ -57,6 +58,7 @@ class Enemy extends Entity {
     }
 
     updateSaber() {
+        if(this.saber == null) return;
         if(!this.saber.isAlive) return;
         let minX = min(this.players[0].position.x, this.players[1].position.x);
         let maxX = max(this.players[0].position.x, this.players[1].position.x);
