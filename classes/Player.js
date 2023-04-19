@@ -1,5 +1,6 @@
-class Player {
+class Player extends Entity {
     constructor(settings = {}) {
+        super("Player", 1);
         this.position = createVector(width/2, height/2);
         if(settings.position != null) this.position = createVector(settings.position.x, settings.position.y);
 
@@ -36,8 +37,6 @@ class Player {
 
         this.step = 1;
         if(settings.step != null) this.step = settings.step;
-
-        this.isAlive = true;
     }
 
     update() {

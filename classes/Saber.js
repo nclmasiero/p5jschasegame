@@ -1,5 +1,6 @@
-class Saber {
+class Saber extends Entity {
     constructor(players) {
+        super("Saber");
         this.players = players;
         this.position1 = {
             x: players[0].x,
@@ -9,7 +10,6 @@ class Saber {
             x: players[1].x,
             y: players[1].y
         };
-        this.isAlive = true;
     }
 
     update() {

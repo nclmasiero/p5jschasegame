@@ -1,5 +1,6 @@
-class GuiRenderer {
+class GuiRenderer extends Entity {
     constructor() {
+        super("GuiRenderer", 2);
         this.bar = new ProgressBar({
             position: {
                 x: 50 + width/6,

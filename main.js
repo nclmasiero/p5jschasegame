@@ -1,22 +1,15 @@
-var entities;
-var saber;
-var players;
 var score;
 var gui;
 var playersHp;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    entities = [];
-    gui = new GuiRenderer();
+    entitiesManager = new EntitiesManager();
 
-    players = getPlayers();
-    saber = new Saber(players);
-    
-    entities.push(saber);
-    for(let player of players) {
-        entities.push(player);
-    }
+    entitiesManager.addEntity(new EnemySpawner());
+    entitiesManager.addEntities(getPlayers());
+    entitiesManager.addEntity(new Saber(entitiesManager.getPlayers()));
+    entitiesManager.addEntity(new GuiRenderer());
 
     playersHp = 100;
     score = 0;
@@ -26,26 +19,10 @@ function draw() {
     background(200);
 
     // updating
-    for(let i = entities.length - 1; i >= 0; i--) {
-        let entity = entities[i];
-
-        entity.update();
-        if(entity.isAlive != null) {
-            if(!entity.isAlive) entities.splice(i, 1);
-        }
-    }
-    gui.update();
+    this.entitiesManager.update();
     
     // rendering
-    for(let entity of entities) {
-        entity.render();
-    }
-    gui.render();
-
-    // temporary enemy spawner
-    if(frameCount % 30 == 0) {
-        entities.push(getEnemy());
-    }
+    this.entitiesManager.render();
 }
 
 function windowResized() {
@@ -54,13 +31,9 @@ function windowResized() {
 
 // FUNCTIONS //
 
-function getEnemy() {
-    return new Enemy(random(width), random(height), saber, players);
-}
-
 function particleEffect(x, y, amount, color) {
     for(let i = 0; i < amount; i++) {
-        entities.push(getParticle(x, y, color));
+        entitiesManager.addEntity(getParticle(x, y, color));
     }
 }
 
@@ -125,9 +98,9 @@ function getPlayers() {
 function addPoints(x, y, amount) {
     if(amount == 0) return;
     if(amount < 0) {
-        entities.push(getTextParticle(x, y, {red:200,green:50,blue:50}, amount))
+        entitiesManager.addEntity(getTextParticle(x, y, {red:200,green:50,blue:50}, amount))
     } else {
-        entities.push(getTextParticle(x, y, {red:50,green:200,blue:50}, "+" + amount))
+        entitiesManager.addEntity(getTextParticle(x, y, {red:50,green:200,blue:50}, "+" + amount))
     }
 
     score += amount;

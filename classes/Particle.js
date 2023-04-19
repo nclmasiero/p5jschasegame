@@ -1,5 +1,6 @@
-class Particle {
+class Particle extends Entity {
     constructor(settings) {
+        super("Particle");
         this.position = createVector(width/2, height/2);
         if(settings.position != null) this.position = createVector(settings.position.x, settings.position.y);
 

@@ -1,9 +1,8 @@
-class Enemy {
+class Enemy extends Entity {
     constructor(x, y, saber, players) {
+        super("Enemy");
         this.position = createVector(x, y);
         this.diameter = 15;
-
-        this.isAlive = true;
 
         this.saber = saber;
 
