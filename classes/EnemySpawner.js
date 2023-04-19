@@ -16,7 +16,7 @@ class EnemySpawner extends Entity {
     // FUNCTIONS
 
     getEnemy() {
-        let saber = entitiesManager.getSaber()[0];
+        let saber = entitiesManager.getSaber();
         let players = entitiesManager.getPlayers();
         return new Enemy(random(width), random(height), saber, players);
     }

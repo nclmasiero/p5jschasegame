@@ -70,7 +70,7 @@ class Enemy extends Entity {
     explode() {
         let amount = round(random(2, 3));
         let color = this.color;
-        particleEffect(this.position.x, this.position.y, amount, color);
+        entitiesManager.getParticleSystem().particleEffect(this.position.x, this.position.y, amount, color);
 
         this.isAlive = false;
     }

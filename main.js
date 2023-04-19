@@ -1,7 +1,3 @@
-var score;
-var gui;
-var playersHp;
-
 function setup() {
     createCanvas(windowWidth, windowHeight);
     entitiesManager = new EntitiesManager();
@@ -10,6 +6,7 @@ function setup() {
     entitiesManager.addEntities(getPlayers());
     entitiesManager.addEntity(new Saber(entitiesManager.getPlayers()));
     entitiesManager.addEntity(new GuiRenderer());
+    entitiesManager.addEntity(new ParticleSystem());
 
     playersHp = 100;
     score = 0;
@@ -30,34 +27,6 @@ function windowResized() {
 }
 
 // FUNCTIONS //
-
-function particleEffect(x, y, amount, color) {
-    for(let i = 0; i < amount; i++) {
-        entitiesManager.addEntity(getParticle(x, y, color));
-    }
-}
-
-function getParticle(x, y, color) {
-    return new Particle({
-        position: {
-            x: x,
-            y: y
-        },
-        color: color
-    });
-}
-
-function getTextParticle(x, y, color, text) {
-    return new TextParticle({
-        position: {
-            x: x,
-            y: y
-        },
-        color: color,
-        text: text,
-        diameter: 30
-    });
-}
 
 function getPlayers() {
     let p1 = new Player({
@@ -97,10 +66,11 @@ function getPlayers() {
 
 function addPoints(x, y, amount) {
     if(amount == 0) return;
+    let particleSystem = entitiesManager.getParticleSystem();
     if(amount < 0) {
-        entitiesManager.addEntity(getTextParticle(x, y, {red:200,green:50,blue:50}, amount))
+        entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:200,green:50,blue:50}, amount))
     } else {
-        entitiesManager.addEntity(getTextParticle(x, y, {red:50,green:200,blue:50}, "+" + amount))
+        entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:50,green:200,blue:50}, "+" + amount))
     }
 
     score += amount;

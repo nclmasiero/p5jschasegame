@@ -38,7 +38,9 @@ class EntitiesManager {
         for(let entity of this.entities) {
             if(entity.name == name) ret.push(entity);
         }
-        return ret;
+        if(ret.length == 0) return null;
+        if(ret.length == 1) return ret[0];
+        else return ret;
     }
 
     getPlayers() {
@@ -55,5 +57,9 @@ class EntitiesManager {
     
     getParticles() {
         return this.getEntitiesWithName("Particle");
+    }
+
+    getParticleSystem() {
+        return this.getEntitiesWithName("ParticleSystem");
     }
 }
