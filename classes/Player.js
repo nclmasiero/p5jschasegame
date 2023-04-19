@@ -1,5 +1,3 @@
-// a subtle change 2
-
 class Player {
     constructor(settings = {}) {
         this.position = createVector(width/2, height/2);
