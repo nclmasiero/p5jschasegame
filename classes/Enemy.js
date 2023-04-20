@@ -11,13 +11,15 @@ class Enemy extends Entity {
         this.target = this.getNearestPlayer();
 
         this.refreshTime = 120;
-        this.speed = random(2.5, 3.5);
+        this.speed = map(this.maxDiameter, 14, 20, 2, 3);
 
         this.color = {
             red: 200,
             green: 51,
             blue: 51
         };
+
+        this.damage = round(map(this.maxDiameter, 14, 20, 5, 13));
     }
 
     update() {
@@ -57,9 +59,16 @@ class Enemy extends Entity {
             let distance = dist(this.position.x, this.position.y, player.position.x, player.position.y);
             let diameterSum = player.diameter + this.diameter;
             if(distance <= diameterSum/2) {
-                addPoints(this.position.x, this.position.y, round(random(-5, 0)))
+
+                if(score >= 10) {
+                    let pointsVariation = 0;
+                    if(random(100) < 10) pointsVariation = -1;
+                    if(random(100) < 1) pointsVariation = -2
+                    addPoints(this.position.x, this.position.y, pointsVariation);
+                }
+
                 this.explode();
-                player.hit();
+                player.hit(this.damage);
             }
         }
     }
@@ -74,6 +83,8 @@ class Enemy extends Entity {
 
         if(this.saber.getDistance(this.position.x, this.position.y) <= this.diameter/2) {
             this.kill();
+
+            if(random(100) < 10) addHealth(this.position.x, this.position.y, round(random(1, 2)));
         }
     }
 

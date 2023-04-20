@@ -67,14 +67,25 @@ function getPlayers() {
     return [p1, p2];
 }
 
+function addHealth(x, y, amount) {
+    if(amount == 0) return;
+    let particleSystem = entitiesManager.getParticleSystem();
+    if(amount > 0) {
+        entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:51,green:200,blue:51}, "+" + amount));
+    } else {
+        entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:200,green:51,blue:51}, amount));
+    }
+
+    playersHp += amount;
+}
+
 function addPoints(x, y, amount) {
     if(amount == 0) return;
     let particleSystem = entitiesManager.getParticleSystem();
-    if(amount < 0) {
-        entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:200,green:50,blue:50}, amount))
-    } else {
-        entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:50,green:200,blue:50}, "+" + amount))
-    }
+    let text = "+" + amount;
+    if(amount < 0) text = amount;
+
+    entitiesManager.addEntity(particleSystem.getTextParticle(x, y, {red:51,green:51,blue:51}, text));
 
     score += amount;
     if(score < 0) score = 0;

@@ -134,11 +134,11 @@ class Player extends Entity {
         if(abs(this.speed.y) > this.maxSpeed) this.speed.y = Math.sign(this.speed.y) * this.maxSpeed;
     }
 
-    hit() {
+    hit(amount) {
         if(playersHp <= 0) {
             this.explode();
         }
-        playersHp -= round(random(5, 20));
+        addHealth(this.position.x, this.position.y, -amount);
     }
 
     explode() {
