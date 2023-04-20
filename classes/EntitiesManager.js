@@ -83,5 +83,9 @@ class EntitiesManager {
     getParticleSystem() {
         return this.getEntitiesWithName("ParticleSystem");
     }
+
+    getLogger() {
+        return this.getEntitiesWithName("DebugHandler");
+    }
     
 }

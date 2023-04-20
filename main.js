@@ -1,9 +1,12 @@
 function setup() {
     createCanvas(windowWidth, windowHeight);
     noCursor();
+    debug = false;
+    paused = false;
     
     entitiesManager = new EntitiesManager();
 
+    entitiesManager.addEntity(new DebugHandler());
     entitiesManager.addEntity(new EnemySpawner());
     entitiesManager.addEntities(getPlayers());
     entitiesManager.addEntity(new Saber(entitiesManager.getPlayers()));
@@ -19,7 +22,7 @@ function draw() {
     background(200);
 
     // updating
-    this.entitiesManager.update();
+    if(!paused) this.entitiesManager.update();
     
     // rendering
     this.entitiesManager.render();
@@ -27,6 +30,21 @@ function draw() {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+}
+
+function keyTyped() {
+    if(paused) {
+        entitiesManager.getLogger().type(key);
+        return;
+    }
+    if(key == "c") {
+        this.debug = !this.debug;
+        if(this.debug) logm("console enabled");
+    }
+    if(key == "p") {
+        paused = true;
+        if(paused) logm("game paused");
+    }
 }
 
 // FUNCTIONS //
@@ -89,4 +107,8 @@ function addPoints(x, y, amount) {
 
     score += amount;
     if(score < 0) score = 0;
+}
+
+function logm(message) {
+    entitiesManager.getLogger().log(message);
 }
