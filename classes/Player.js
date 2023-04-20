@@ -118,9 +118,17 @@ class Player extends Entity {
 
     hit() {
         if(playersHp <= 0) {
-            this.isAlive = false;
+            this.explode();
         }
         playersHp -= round(random(5, 20));
+    }
+
+    explode() {
+        let amount = round(random(10, 20));
+        let color = this.color;
+        entitiesManager.getParticleSystem().particleEffect(this.position.x, this.position.y, amount, color);
+        
+        this.isAlive = false;
     }
 
     kick(x, y) {

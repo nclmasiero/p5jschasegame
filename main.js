@@ -8,6 +8,8 @@ function setup() {
     entitiesManager.addEntity(new GuiRenderer());
     entitiesManager.addEntity(new ParticleSystem());
 
+    entitiesManager.addEntity(new Pickup(width/2, height/2, 50, {red:200,green:50,blue:150}));
+
     playersHp = 100;
     score = 0;
 }
