@@ -37,6 +37,9 @@ class Player extends Entity {
 
         this.step = 1;
         if(settings.step != null) this.step = settings.step;
+
+        this.isStatic = false;
+        this.mass = 1;
     }
 
     update() {
@@ -118,5 +121,10 @@ class Player extends Entity {
             this.isAlive = false;
         }
         playersHp -= round(random(5, 20));
+    }
+
+    kick(x, y) {
+        this.speed.x += x;
+        this.speed.y += y;
     }
 }

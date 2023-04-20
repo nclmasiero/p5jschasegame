@@ -11,6 +11,9 @@ class EntitiesManager {
             }
             this.entities[i].update();
         }
+
+        this.bouncePlayers();
+
     }
 
     render() {
@@ -22,6 +25,19 @@ class EntitiesManager {
     }
 
     // FUNCTIONS //
+
+    bouncePlayers() {
+        let players = this.getPlayers();
+        if(!players) return;
+        if(players.length <= 1) return;
+
+        let collision = Collision.isColliding(players[0], players[1]);
+        let bounceCollision = Collision.isColliding(players[0], players[1]);
+        if(collision != false) {
+            Collision.snap(collision);
+            Collision.bounce(bounceCollision);
+        }
+    }
 
     addEntity(e) {
         this.entities.push(e);
