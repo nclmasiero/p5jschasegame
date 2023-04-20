@@ -53,6 +53,7 @@ class Enemy extends Entity {
     updatePlayers() {
         if(this.players == null) return;
         for(let player of this.players) {
+            if(player.powerups.ghost > 0) continue;
             let distance = dist(this.position.x, this.position.y, player.position.x, player.position.y);
             let diameterSum = player.diameter + this.diameter;
             if(distance <= diameterSum/2) {

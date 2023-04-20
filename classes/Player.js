@@ -40,6 +40,11 @@ class Player extends Entity {
 
         this.isStatic = false;
         this.mass = 1;
+
+        this.powerups = {
+            invincible: 0,
+            ghost: 0
+        };
     }
 
     update() {
@@ -54,16 +59,25 @@ class Player extends Entity {
 
         // others
         this.updateBorders();
+        this.updatePowerups();
     }
     
     render() {
+        let alpha = 255;
+        if(this.powerups.ghost > 0) alpha = 150;
         stroke(51);
         strokeWeight(3);
-        fill(this.color.red, this.color.green, this.color.blue);
+        fill(this.color.red, this.color.green, this.color.blue, alpha);
         circle(this.position.x, this.position.y, this.diameter);
     }
     
     // FUNCTIONS //
+
+    updatePowerups() {
+        for(let key in this.powerups) {
+            this.powerups[key] = max(0, this.powerups[key] - 1);
+        }
+    }
 
     updateBorders() {
         if(this.position.x > width - this.diameter/2) this.position.x = width - this.diameter/2;
@@ -74,7 +88,11 @@ class Player extends Entity {
     }
     
     updateSpeed() {
-        this.position.add(this.speed);
+        let mult = 1;
+        if(this.powerups.enhanced > 0) mult = 1.5;
+
+        this.position.x += this.speed.x * mult;
+        this.position.y += this.speed.y * mult;
     }
 
     updateKeys() {

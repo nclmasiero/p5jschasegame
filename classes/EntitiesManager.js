@@ -31,6 +31,8 @@ class EntitiesManager {
         if(!players) return;
         if(players.length <= 1) return;
 
+        if(players[0].powerups.ghost > 0 || players[1].powerups.ghost > 0) return;
+
         let collision = Collision.isColliding(players[0], players[1]);
         let bounceCollision = Collision.isColliding(players[0], players[1]);
         if(collision != false) {
@@ -81,4 +83,5 @@ class EntitiesManager {
     getParticleSystem() {
         return this.getEntitiesWithName("ParticleSystem");
     }
+    
 }

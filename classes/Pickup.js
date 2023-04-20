@@ -11,10 +11,12 @@ class Pickup extends Entity {
     }
 
     render() {
+        let diameter = abs(sin(frameCount / 50) * this.diameter) + this.diameter/2;
+
         stroke(51);
         strokeWeight(2);
         fill(this.color.red, this.color.green, this.color.blue);
-        circle(this.position.x, this.position.y, this.diameter);
+        circle(this.position.x, this.position.y, diameter);
     }
 
     // FUNCTIONS //

@@ -1,5 +1,7 @@
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    noCursor();
+    
     entitiesManager = new EntitiesManager();
 
     entitiesManager.addEntity(new EnemySpawner());
@@ -7,8 +9,7 @@ function setup() {
     entitiesManager.addEntity(new Saber(entitiesManager.getPlayers()));
     entitiesManager.addEntity(new GuiRenderer());
     entitiesManager.addEntity(new ParticleSystem());
-
-    entitiesManager.addEntity(new Pickup(width/2, height/2, 50, {red:200,green:50,blue:150}));
+    entitiesManager.addEntity(new PickupSpawner());
 
     playersHp = 100;
     score = 0;
