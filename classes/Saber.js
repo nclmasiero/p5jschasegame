@@ -10,6 +10,9 @@ class Saber extends Entity {
             x: players[1].x,
             y: players[1].y
         };
+
+        this.alpha = 255;
+        this.requiredDistance = width * 0.6;
     }
 
     update() {
@@ -25,16 +28,34 @@ class Saber extends Entity {
                 break;
             }
         }
+
+        this.updateAlpha();
     }
 
     render() {
         noFill(),
-        stroke(51);
-        strokeWeight(3);
+        stroke(51, this.alpha);
+        strokeWeight(2);
+        line(this.position1.x, this.position1.y, this.position2.x, this.position2.y);
+    
+        stroke(51, 200, 200, this.alpha * 0.4);
+        strokeWeight(4);
         line(this.position1.x, this.position1.y, this.position2.x, this.position2.y);
     }
 
     // FUNCTIONS //
+
+    updateAlpha() {
+        let distance = this.getPlayersDistance();
+        this.alpha = map(distance, this.requiredDistance / 3, this.requiredDistance, 255, 0);
+    }
+
+    getPlayersDistance() {
+        if(this.players.length <= 1) return 0;
+        let p1 = this.players[0];
+        let p2 = this.players[1];
+        return dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
+    }
 
     getEquation() {
 

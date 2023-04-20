@@ -2,7 +2,8 @@ class Enemy extends Entity {
     constructor(x, y) {
         super("Enemy");
         this.position = createVector(x, y);
-        this.diameter = 15;
+        this.maxDiameter = round(random(14, 20));
+        this.diameter = 0;
 
         this.saber = entitiesManager.getSaber();
 
@@ -10,7 +11,7 @@ class Enemy extends Entity {
         this.target = this.getNearestPlayer();
 
         this.refreshTime = 120;
-        this.speed = 3;
+        this.speed = random(2.5, 3.5);
 
         this.color = {
             red: 200,
@@ -25,6 +26,7 @@ class Enemy extends Entity {
         this.updateSaber();
         this.updatePlayers();
         if(this.isAlive) this.updateBorders();
+        this.updateDiameter();
     }
 
     render() {
@@ -35,6 +37,10 @@ class Enemy extends Entity {
     }
 
     // FUNCTIONS //
+
+    updateDiameter() {
+        this.diameter += Math.sign(this.maxDiameter - this.diameter);
+    }
 
     updateBorders() {
         if(this.position.x > width - this.diameter/2) this.position.x = width - this.diameter/2;
@@ -60,6 +66,7 @@ class Enemy extends Entity {
     updateSaber() {
         if(this.saber == null) return;
         if(!this.saber.isAlive) return;
+        if(this.saber.alpha <= 0) return;
         let minX = min(this.players[0].position.x, this.players[1].position.x);
         let maxX = max(this.players[0].position.x, this.players[1].position.x);
         if(!(this.position.x > minX && this.position.x < maxX)) return;
